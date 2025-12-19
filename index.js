@@ -49,11 +49,11 @@ const createAdminUser = async () => {
 // Create admin after database connection
 setTimeout(createAdminUser, 3000);
 
-const cors = require("cors");
-
+const app = express();
 app.use(cors({
-  origin: "https://inventixx.netlify.app",
-  methods: ["GET", "POST", "PUT", "DELETE"], // include DELETE here
+  origin: "https://inventixx.netlify.app",  // allow your Netlify frontend
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 
 
