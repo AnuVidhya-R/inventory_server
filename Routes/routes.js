@@ -62,6 +62,20 @@ router.put("/orders/:id", async (req, res) => {
   }
 });
 
+/* ORDERS */
+router.delete("/orders/:id", async (req, res) => {
+  try {
+    const { Order } = await import("../Model/model.js");
+    const order = await Order.findByIdAndDelete(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.json({ message: "Order deleted successfully", order });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 /* PRODUCTS */
 router.get("/products", async (req, res) => {
   try {
