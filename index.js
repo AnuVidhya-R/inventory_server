@@ -50,6 +50,12 @@ const createAdminUser = async () => {
 setTimeout(createAdminUser, 3000);
 
 const app = express();
+app.use(cors({
+  origin: "https://inventixx.netlify.app",  // allow your Netlify frontend
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
 
 app.use(cors());
 app.use(express.json());
