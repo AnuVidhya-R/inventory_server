@@ -50,6 +50,16 @@ const createAdminUser = async () => {
 setTimeout(createAdminUser, 3000);
 
 const app = express();
+
+// Handle preflight requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://inventixx.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
+
 app.use(cors({
   origin: "https://inventixx.netlify.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -58,6 +68,15 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Manual CORS headers as backup
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://inventixx.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 
 // Add request logging
 app.use((req, res, next) => {
