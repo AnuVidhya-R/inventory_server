@@ -94,12 +94,26 @@ export const getProducts = async (req, res) => {
 
 /* UPDATE PRODUCT */
 export const updateProduct = async (req, res) => {
-  const updated = await Product.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
-  res.json(updated);
+  try {
+    console.log('Updating product with ID:', req.params.id);
+    console.log('Update data:', req.body);
+    
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    
+    if (!updated) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    
+    console.log('Product updated successfully:', updated);
+    res.json(updated);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 /* DELETE PRODUCT */
