@@ -51,13 +51,12 @@ setTimeout(createAdminUser, 3000);
 
 const app = express();
 app.use(cors({
-  origin: "https://inventixx.netlify.app",  // allow your Netlify frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "https://inventixx.netlify.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
 
-
-app.use(cors());
 app.use(express.json());
 
 // Add request logging
