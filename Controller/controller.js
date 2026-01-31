@@ -88,8 +88,13 @@ export const addProduct = async (req, res) => {
 
 /* GET PRODUCTS */
 export const getProducts = async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 /* UPDATE PRODUCT */
@@ -118,6 +123,14 @@ export const updateProduct = async (req, res) => {
 
 /* DELETE PRODUCT */
 export const deleteProduct = async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
-  res.json({ message: "Product deleted" });
+  try {
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json({ message: "Product deleted" });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ message: error.message });
+  }
 };

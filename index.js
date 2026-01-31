@@ -126,4 +126,6 @@ app.listen(process.env.PORT, () => {
   console.log(`✅ Server is running on http://localhost:${process.env.PORT}`);
   console.log(`✅ API endpoints available at http://localhost:${process.env.PORT}/inventix`);
   console.log(`✅ Admin Login: Meena@inventix.com / inventix2510`);
+}).on('error', (err) => {
+  console.error('❌ Server failed to start:', err);
 });
